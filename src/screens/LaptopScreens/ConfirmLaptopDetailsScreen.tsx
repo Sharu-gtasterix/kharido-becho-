@@ -11,10 +11,7 @@ import SellFlowLayout from '../Sell/common/SellFlowLayout';
 import { buildSellFlowSteps } from '../Sell/common/steps';
 import { useSafeAsyncState } from '../../hooks/useSafeAsyncState';
 import { useAuth } from '../../context/AuthContext';
-import {
-  getLaptopConfirmDetailsCombined,
-  type LaptopConfirmDetailsDTO,
-} from '../../api/LaptopsApi/confirmDetails';
+import { getLaptopConfirmDetailsCombined, type LaptopConfirmDetailsDTO } from '../../api/LaptopsApi';
 import { SellLaptopStackParamList } from '../../navigation/SellLaptopStack';
 
 type ConfirmLaptopNav = NativeStackNavigationProp<SellLaptopStackParamList, 'ConfirmLaptopDetails'>;
@@ -100,4 +97,3 @@ const ConfirmLaptopDetailsScreen: React.FC = () => {
 };
 
 export default ConfirmLaptopDetailsScreen;
-

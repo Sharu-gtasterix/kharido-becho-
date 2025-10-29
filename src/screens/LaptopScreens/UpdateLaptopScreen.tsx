@@ -4,8 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { MyLaptopAdsStackParamList } from '../../navigation/MyLaptopAdsStack';
-import { getLaptopById, LaptopDetail } from '../../api/LaptopsApi/getLaptopById';
-import { updateLaptop } from '../../api/LaptopsApi/updateLaptop';
+import { getLaptopById, LaptopDetail, updateLaptop } from '../../api/LaptopsApi';
 import ListingUpdateLayout from '../../components/details/ListingUpdateLayout';
 import ListingUpdateLoader from '../../components/details/ListingUpdateLoader';
 import ListingFormInput from '../../components/form/ListingFormInput';

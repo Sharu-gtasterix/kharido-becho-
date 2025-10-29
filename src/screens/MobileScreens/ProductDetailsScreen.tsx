@@ -8,18 +8,17 @@ import ListingDetailsLayout, {
   DetailSection,
 } from '../../components/details/ListingDetailsLayout';
 import BottomSheet from '../../components/myads/BottomSheet';
-import BottomActionBar from '../../components/myadsflowcomponets/BottomActionBar';
+import BottomActionBar from '../../components/myadsFlowComponents/BottomActionBar';
 import MobileCardMenu from '../../components/mobiles/MobileCardMenu';
 import useListingDetails from '../../hooks/useListingDetails';
-import { deleteMobile } from '../../api/MobilesApi/deleteMobile';
-import { getMobileById, MobileDetail } from '../../api/MobilesApi/productDetails';
+import { deleteMobile, getMobileById, MobileDetail } from '../../api/MobilesApi';
 import { MyAdsStackParamList } from '../../navigation/MyAdsStack';
 
 type DetailsRouteProp = RouteProp<MyAdsStackParamList, 'ProductDetails'>;
 type NavProp = NativeStackNavigationProp<MyAdsStackParamList>;
 
 const ACTION_BAR_HEIGHT = 96;
-const PLACEHOLDER_IMAGE = require('../../assets/icons/Hyundai.png');
+const PLACEHOLDER_IMAGE = require('../../assets/icons/hyundai.png');
 
 const currencyText = (value?: number) => {
   if (typeof value === 'number') {

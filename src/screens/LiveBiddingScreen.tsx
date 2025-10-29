@@ -23,7 +23,7 @@ const LiveBiddingScreen: React.FC = () => {
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState<'My Products' | 'All Products'>('My Products');
 
-  const hyundaiImage = require('../assets/icons/Hyundai.png');
+  const hyundaiImage = require('../assets/icons/hyundai.png');
 
   const carData: CarItem[] = [
     {

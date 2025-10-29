@@ -19,14 +19,14 @@ import { MyAdsStackParamList } from '../navigation/MyAdsStack';
 type HomeScreenNavigationProp = NativeStackNavigationProp<MyAdsStackParamList, 'HomeScreen'>;
 
 const categories = [
-  { id: '1', name: 'Vehicle', icon: require('../assets/icons/Vehicle.png'), bgColor: '#FFF4CC' },
-  { id: '2', name: 'Electronics', icon: require('../assets/icons/Electronics.png'), bgColor: '#D9F3FF' },
-  { id: '3', name: 'Fashion', icon: require('../assets/icons/Fashion.png'), bgColor: '#FFE1EC' },
-  { id: '4', name: 'Kitchen appliances', icon: require('../assets/icons/Kitchenappliances.png'), bgColor: '#FFF2D9' },
-  { id: '5', name: 'Real Estate', icon: require('../assets/icons/RealEstate.png'), bgColor: '#FFECE0' },
-  { id: '6', name: 'Jobs', icon: require('../assets/icons/Jobs.png'), bgColor: '#FFEFF6' },
-  { id: '7', name: 'Books', icon: require('../assets/icons/Books.png'), bgColor: '#EDF0FF' },
-  { id: '8', name: 'Services', icon: require('../assets/icons/Services.png'), bgColor: '#E8F5F1' },
+  { id: '1', name: 'Vehicle', icon: require('../assets/icons/vehicle.png'), bgColor: '#FFF4CC' },
+  { id: '2', name: 'Electronics', icon: require('../assets/icons/electronics.png'), bgColor: '#D9F3FF' },
+  { id: '3', name: 'Fashion', icon: require('../assets/icons/fashion.png'), bgColor: '#FFE1EC' },
+  { id: '4', name: 'Kitchen appliances', icon: require('../assets/icons/kitchen-appliances.png'), bgColor: '#FFF2D9' },
+  { id: '5', name: 'Real Estate', icon: require('../assets/icons/real-estate.png'), bgColor: '#FFECE0' },
+  { id: '6', name: 'Jobs', icon: require('../assets/icons/jobs.png'), bgColor: '#FFEFF6' },
+  { id: '7', name: 'Books', icon: require('../assets/icons/books.png'), bgColor: '#EDF0FF' },
+  { id: '8', name: 'Services', icon: require('../assets/icons/services.png'), bgColor: '#E8F5F1' },
 ];
 
 const products = [
@@ -36,7 +36,7 @@ const products = [
     price: '₹2,50,000',
     specs: '2009 • 150,000 km',
     location: 'Baner, Pune',
-    image: require('../assets/icons/Hyundai.png'),
+    image: require('../assets/icons/hyundai.png'),
   },
   {
     id: '2',
@@ -44,7 +44,7 @@ const products = [
     price: '₹2,50,000',
     specs: '2009 • 150,000 km',
     location: 'Baner, Pune',
-    image: require('../assets/icons/Hyundai.png'),
+    image: require('../assets/icons/hyundai.png'),
   },
   {
     id: '3',
@@ -52,7 +52,7 @@ const products = [
     price: '₹2,50,000',
     specs: '2009 • 150,000 km',
     location: 'Baner, Pune',
-    image: require('../assets/icons/Hyundai.png'),
+    image: require('../assets/icons/hyundai.png'),
   },
   {
     id: '4',
@@ -60,7 +60,7 @@ const products = [
     price: '₹2,50,000',
     specs: '2009 • 150,000 km',
     location: 'Baner, Pune',
-    image: require('../assets/icons/Hyundai.png'),
+    image: require('../assets/icons/hyundai.png'),
   },
 ];
 

@@ -4,8 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { MyMobileAdsStackParamList } from '../../navigation/MyMobileAdsStack';
-import { getAllMobiles } from '../../api/MobilesApi/getAllMobiles';
-import { deleteMobile } from '../../api/MobilesApi/deleteMobile';
+import { deleteMobile, getAllMobiles } from '../../api/MobilesApi';
 
 import MobileCard from '../../components/mobiles/MobileCard';
 import MobileCardMenu from '../../components/mobiles/MobileCardMenu';
@@ -141,7 +140,7 @@ const MyMobilesAdsListScreen: React.FC = () => {
   const renderAdCard = ({ item }: { item: ApiMobile }) => {
     const primaryImage = item.images?.[0]
       ? { uri: item.images[0] }
-      : require('../../assets/icons/Hyundai.png');
+      : require('../../assets/icons/hyundai.png');
 
     const titleText = item.title || 'Untitled Mobile';
     const subtitleText = [item.brand, item.yearOfPurchase?.toString()].filter(Boolean).join(' | ');

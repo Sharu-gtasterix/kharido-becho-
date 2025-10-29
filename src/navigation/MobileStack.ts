@@ -1,2 +1,2 @@
 // src/navigation/MobileStack.ts
-export { SellMobileStackParamList as MobileStackParamList } from './SellMobileStack';
+export type { SellMobileStackParamList as MobileStackParamList } from './SellMobileStack';

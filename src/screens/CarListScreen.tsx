@@ -31,7 +31,7 @@ const CarListScreen: React.FC = () => {
   const navigation = useNavigation<MyAdsScreenNavigationProp>();
   const [activeTab, setActiveTab] = useState<'Upcoming Car' | 'Live Car'>('Upcoming Car');
 
-  const hyundaiImage = require('../assets/icons/Hyundai.png'); // Replace with your image path
+  const hyundaiImage = require('../assets/icons/hyundai.png'); // Replace with your image path
   const carImage = require('../assets/icons/car.png'); // Replace with your car image path for the detail screen
 
   const carData: CarItem[] = [

@@ -9,7 +9,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import CarListScreen from './src/screens/CarListScreen';
-import ProductDetailsScreen from './src/screens/ProductDetailsScreen';
+import ProductDetailsScreen from './src/screens/MobileScreens/ProductDetailsScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import LiveBiddingScreen from './src/screens/LiveBiddingScreen';
 import ProfileScreen from './src/screens/ProfileScreen';

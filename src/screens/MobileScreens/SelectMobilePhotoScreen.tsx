@@ -11,7 +11,7 @@ import PhotoUploadLayout, {
 import { useSafeAsyncState } from '../../hooks/useSafeAsyncState';
 import { MobileStackParamList } from '../../navigation/MobileStack';
 import { ensureOverlayReady } from '../../utils/ensureOverlayReady';
-import { uploadMobileImages } from '../../api/MobilesApi/uploadImages';
+import { uploadMobileImages } from '../../api/MobilesApi';
 
 type SelectPhotoNavProp = NativeStackNavigationProp<MobileStackParamList, 'SelectPhoto'>;
 type RouteProps = RouteProp<MobileStackParamList, 'SelectPhoto'>;
@@ -195,4 +195,3 @@ const SelectMobilePhotoScreen: React.FC = () => {
 };
 
 export default SelectMobilePhotoScreen;
-

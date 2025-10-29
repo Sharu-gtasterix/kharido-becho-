@@ -1,14 +1,10 @@
-import React from 'react';
-import { Alert } from 'react-native';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useCallback } from 'react';
+import { Alert, type AlertButton, type AlertOptions } from 'react-native';
+import { RouteProp, useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Asset, launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
-import {
-  RNFile,
-  UploadProgress,
-  uploadLaptopImages,
-} from '../../api/LaptopsApi/uploadLaptopImages';
+import { RNFile, UploadProgress, uploadLaptopImages } from '../../api/LaptopsApi';
 import PhotoUploadLayout, {
   PhotoUploadProgressState,
   PhotoUploadStep,
@@ -35,23 +31,34 @@ const SelectLaptopPhotoScreen: React.FC = () => {
   const navigation = useNavigation<SelectLaptopPhotoNav>();
   const route = useRoute<SelectLaptopPhotoRoute>();
   const { laptopId } = route.params;
+  const isFocused = useIsFocused();
 
   const [uploading, setUploading] = useSafeAsyncState(false);
   const [uploadProgress, setUploadProgress] = useSafeAsyncState<PhotoUploadProgressState | null>(
     null,
   );
 
+  const showAlert = useCallback(
+    (title: string, message?: string, buttons?: AlertButton[], options?: AlertOptions) => {
+      if (!isFocused) {
+        return;
+      }
+      Alert.alert(title, message, buttons, options);
+    },
+    [isFocused],
+  );
+
   const uploadFromAssets = async (assets: Asset[]) => {
     if (uploading) return;
 
     if (!laptopId) {
-      Alert.alert('Error', 'Missing laptop ID');
+      showAlert('Error', 'Missing laptop ID');
       return;
     }
 
     const valid = (assets || []).filter((asset) => !!asset?.uri);
     if (valid.length === 0) {
-      Alert.alert('Error', 'No photos selected');
+      showAlert('Error', 'No photos selected');
       return;
     }
 
@@ -99,7 +106,7 @@ const SelectLaptopPhotoScreen: React.FC = () => {
       const navigateToConfirm = () => navigation.replace('ConfirmLaptopDetails', { laptopId });
 
       if (failCount > 0) {
-        Alert.alert(
+        showAlert(
           'Partial Success',
           `${successCount} of ${total} images uploaded successfully.\n${failCount} failed.`,
           [
@@ -108,12 +115,12 @@ const SelectLaptopPhotoScreen: React.FC = () => {
           ],
         );
       } else {
-        Alert.alert('Success', `All ${successCount} images uploaded successfully!`);
+        showAlert('Success', `All ${successCount} images uploaded successfully!`);
         navigateToConfirm();
       }
     } catch (error: any) {
       console.error('[LAPTOP PHOTO UPLOAD ERROR]', error?.response?.data || error?.message || error);
-      Alert.alert('Upload Failed', error?.message || 'Network error. Please try again.', [
+      showAlert('Upload Failed', error?.message || 'Network error. Please try again.', [
         { text: 'Retry', onPress: () => uploadFromAssets(assets) },
         { text: 'Cancel', style: 'cancel' },
       ]);
@@ -138,7 +145,7 @@ const SelectLaptopPhotoScreen: React.FC = () => {
       }
     } catch (error) {
       console.error('[CAMERA ERROR]', error);
-      Alert.alert('Camera Error', 'Failed to open camera');
+      showAlert('Camera Error', 'Failed to open camera');
     }
   };
 
@@ -158,7 +165,7 @@ const SelectLaptopPhotoScreen: React.FC = () => {
       }
     } catch (error) {
       console.error('[GALLERY ERROR]', error);
-      Alert.alert('Gallery Error', 'Failed to open gallery');
+      showAlert('Gallery Error', 'Failed to open gallery');
     }
   };
 
@@ -180,4 +187,3 @@ const SelectLaptopPhotoScreen: React.FC = () => {
 };
 
 export default SelectLaptopPhotoScreen;
-

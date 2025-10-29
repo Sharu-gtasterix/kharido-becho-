@@ -109,7 +109,7 @@ const ProfileScreen: React.FC = () => {
               source={
                 profileImage
                   ? { uri: profileImage }
-                  : require('../assets/icons/User.png')
+                  : require('../assets/icons/user.png')
               }
               style={styles.avatar}
             />

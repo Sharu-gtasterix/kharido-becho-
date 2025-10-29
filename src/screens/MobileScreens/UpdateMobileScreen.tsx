@@ -4,8 +4,7 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { MyAdsStackParamList } from '../../navigation/MyAdsStack';
-import { getMobileById } from '../../api/MobilesApi/productDetails';
-import { updateMobile } from '../../api/MobilesApi/updateMobile';
+import { getMobileById, updateMobile } from '../../api/MobilesApi';
 import ListingUpdateLayout from '../../components/details/ListingUpdateLayout';
 import ListingUpdateLoader from '../../components/details/ListingUpdateLoader';
 import ListingFormInput from '../../components/form/ListingFormInput';
@@ -18,7 +17,7 @@ import {
   LISTING_UPDATE_SPACING as SPACING,
 } from '../../theme/listingUpdate';
 import useListingDetails from '../../hooks/useListingDetails';
-import { MobileDetail } from '../../api/MobilesApi/productDetails';
+import { MobileDetail } from '../../api/MobilesApi';
 
 type UpdateRouteProp = RouteProp<MyAdsStackParamList, 'UpdateMobile'>;
 type UpdateNavProp = NativeStackNavigationProp<MyAdsStackParamList, 'UpdateMobile'>;

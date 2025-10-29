@@ -29,7 +29,7 @@ import { FormFieldConfig } from '../../form/config/types';
 import { getMobileDetailsFieldConfig } from '../../form/config/mobileDetailsFields';
 import { normalizeCreateResponse } from '../../utils/normalizeCreateResponse';
 import { toMobileCreateDTO } from '../../mappers/listingMappers';
-import { addMobile } from '../../api/MobilesApi/addMobile';
+import { addMobile } from '../../api/MobilesApi';
 import { useAuth } from '../../context/AuthContext';
 import { SellMobileStackParamList } from '../../navigation/SellMobileStack';
 

@@ -1,5 +1,5 @@
 // src/api/mobiles/productdetails.ts
-import client from '../../api/client';
+import client from '../client';
 
 export type MobileDetail = {
   mobileId: number;

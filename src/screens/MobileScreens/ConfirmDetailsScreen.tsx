@@ -11,7 +11,7 @@ import SellFlowLayout from '../Sell/common/SellFlowLayout';
 import { buildSellFlowSteps } from '../Sell/common/steps';
 import { useSafeAsyncState } from '../../hooks/useSafeAsyncState';
 import { useAuth } from '../../context/AuthContext';
-import { getConfirmDetailsCombined, type ConfirmDetailsDTO } from '../../api/MobilesApi/confirmDetails';
+import { getConfirmDetailsCombined, type ConfirmDetailsDTO } from '../../api/MobilesApi';
 import { SellProductStackParamList } from '../../navigation/SellProductStack';
 
 type ConfirmDetailsScreenNavigationProp = NativeStackNavigationProp<
@@ -100,4 +100,3 @@ const ConfirmDetailsScreen: React.FC = () => {
 };
 
 export default ConfirmDetailsScreen;
-

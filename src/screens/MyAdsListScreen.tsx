@@ -28,7 +28,7 @@ const MyAdsListScreen: React.FC = () => {
     title: 'Maruti Suzuki Dzire 2009',
     km: '2009 – 150,000km',
     location: 'Baner, Pune',
-    image: require('../assets/icons/Hyundai.png'),
+    image: require('../assets/icons/hyundai.png'),
     timeLeft: '00:02:45',
     rating: 4.3,
     description: 'Here electric description goes. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',

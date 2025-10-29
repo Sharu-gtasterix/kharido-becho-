@@ -4,8 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { MyLaptopAdsStackParamList } from '../../navigation/MyLaptopAdsStack';
-import { getAllLaptops, LaptopItem } from '../../api/LaptopsApi/getAllLaptops';
-import { deleteLaptop } from '../../api/LaptopsApi/deleteLaptop';
+import { deleteLaptop, getAllLaptops, LaptopItem } from '../../api/LaptopsApi';
 
 import ListingCard from '../../components/myads/ListingCard';
 import ListingCardMenu from '../../components/myads/ListingCardMenu';
@@ -111,7 +110,7 @@ const MyLaptopAdsListScreen: React.FC = () => {
   const resolveImage = (item: LaptopItem): ImageSourcePropType => {
     const url = item.laptopPhotos?.[0]?.photo_link ?? '';
     if (url) return { uri: url };
-    return require('../../assets/icons/Hyundai.png');
+    return require('../../assets/icons/hyundai.png');
   };
 
   const renderCard = ({ item }: { item: LaptopItem }) => {

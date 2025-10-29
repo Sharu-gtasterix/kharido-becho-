@@ -21,7 +21,7 @@ import { FormFieldConfig } from '../../form/config/types';
 import { laptopDetailsFieldConfig } from '../../form/config/laptopDetailsFields';
 import { normalizeCreateResponse } from '../../utils/normalizeCreateResponse';
 import { toLaptopCreateDTO } from '../../mappers/listingMappers';
-import { addLaptop } from '../../api/LaptopsApi/addLaptop';
+import { addLaptop } from '../../api/LaptopsApi';
 import { useAuth } from '../../context/AuthContext';
 import { SellLaptopStackParamList } from '../../navigation/SellLaptopStack';
 
