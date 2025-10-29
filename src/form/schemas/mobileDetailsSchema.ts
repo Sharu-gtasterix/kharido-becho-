@@ -54,13 +54,13 @@ export const mobileDetailsSchema = z.object({
 export type MobileDetailsFormValues = z.infer<typeof mobileDetailsSchema>;
 
 export const getDefaultMobileDetailsValues = (): MobileDetailsFormValues => ({
-  title: 'iPhone 13 Pro',
-  description: 'Used for 1 year, excellent condition',
-  price: '58000',
+  title: '',
+  description: '',
+  price: '',
   negotiable: null,
   condition: null,
-  brand: 'Apple',
-  model: 'iPhone 13 Pro',
-  color: 'Sierra Blue',
-  yearOfPurchase: '2022',
+  brand: '',
+  model: '',
+  color: '',
+  yearOfPurchase: '',
 });
