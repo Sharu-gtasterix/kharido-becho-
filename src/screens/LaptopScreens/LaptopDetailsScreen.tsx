@@ -12,6 +12,7 @@ import BottomActionBar from '../../components/myadsFlowComponents/BottomActionBa
 import LaptopCardMenu from '../../components/laptops/LaptopCardMenu';
 import useListingDetails from '../../hooks/useListingDetails';
 import { deleteLaptop, getLaptopById, LaptopDetail } from '../../api/LaptopsApi';
+import { extractLaptopPhotos } from '../../api/LaptopsApi/photoNormalizer';
 import { MyLaptopAdsStackParamList } from '../../navigation/MyLaptopAdsStack';
 
 type DetailsRouteProp = RouteProp<MyLaptopAdsStackParamList, 'LaptopDetails'>;
@@ -47,10 +48,20 @@ const LaptopDetailsScreen: React.FC = () => {
   });
 
   const images = useMemo(() => {
-    return (data?.laptopPhotos || [])
-      .map((photo) => photo?.photo_link)
+    const photos = extractLaptopPhotos(data ?? null);
+    return photos
+      .map((photo) => {
+        if (typeof photo?.photo_link === 'string' && photo.photo_link.trim().length > 0) {
+          return photo.photo_link;
+        }
+        const legacy = (photo as any)?.photoLink;
+        if (typeof legacy === 'string' && legacy.trim().length > 0) {
+          return legacy;
+        }
+        return null;
+      })
       .filter((uri): uri is string => typeof uri === 'string' && uri.trim().length > 0);
-  }, [data?.laptopPhotos]);
+  }, [data]);
 
   const titleText = useMemo(() => {
     if (!data) return `Laptop #${laptopId}`;

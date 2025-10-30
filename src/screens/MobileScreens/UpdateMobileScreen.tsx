@@ -4,7 +4,7 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { MyAdsStackParamList } from '../../navigation/MyAdsStack';
-import { getMobileById, updateMobile } from '../../api/MobilesApi';
+import { getMobileById, updateMobile, UpdateMobileDTO } from '../../api/MobilesApi';
 import ListingUpdateLayout from '../../components/details/ListingUpdateLayout';
 import ListingUpdateLoader from '../../components/details/ListingUpdateLoader';
 import ListingFormInput from '../../components/form/ListingFormInput';
@@ -18,6 +18,8 @@ import {
 } from '../../theme/listingUpdate';
 import useListingDetails from '../../hooks/useListingDetails';
 import { MobileDetail } from '../../api/MobilesApi';
+import getFriendlyApiError from '../../utils/getFriendlyApiError';
+import { useAuth } from '../../context/AuthContext';
 
 type UpdateRouteProp = RouteProp<MyAdsStackParamList, 'UpdateMobile'>;
 type UpdateNavProp = NativeStackNavigationProp<MyAdsStackParamList, 'UpdateMobile'>;
@@ -53,6 +55,7 @@ const UpdateMobileScreen: React.FC = () => {
   const navigation = useNavigation<UpdateNavProp>();
   const { params } = useRoute<UpdateRouteProp>();
   const { mobileId } = params;
+  const { sellerId: authSellerId } = useAuth();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -69,6 +72,8 @@ const UpdateMobileScreen: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [saving, setSaving] = useState(false);
+  const [ownerSellerId, setOwnerSellerId] = useState<number | null>(null);
+  const [initialFormData, setInitialFormData] = useState<typeof formData | null>(null);
 
   const yearOptions = useMemo(() => {
     const years: string[] = [];
@@ -92,7 +97,7 @@ const UpdateMobileScreen: React.FC = () => {
 
   useEffect(() => {
     if (!data) return;
-    setFormData({
+    const nextFormData = {
       title: data.title ?? '',
       description: data.description ?? '',
       price: data.price != null ? String(data.price) : '',
@@ -102,7 +107,14 @@ const UpdateMobileScreen: React.FC = () => {
       model: data.model ?? '',
       color: data.color ?? '',
       yearOfPurchase: data.yearOfPurchase ? String(data.yearOfPurchase) : '',
-    });
+    };
+    setFormData(nextFormData);
+    setInitialFormData({ ...nextFormData });
+    setOwnerSellerId(
+      typeof data.sellerId === 'number' && Number.isFinite(data.sellerId)
+        ? data.sellerId
+        : null,
+    );
     setTouched({});
     setErrors({});
   }, [data]);
@@ -200,13 +212,32 @@ const UpdateMobileScreen: React.FC = () => {
       return;
     }
 
+    const changedFields = initialFormData
+      ? (Object.keys(formData) as Array<keyof typeof formData>).filter((field) => {
+          const current = formData[field];
+          const initial = initialFormData[field];
+          const normalize = (value: any) => {
+            if (typeof value === 'string') {
+              return value.trim();
+            }
+            return value;
+          };
+          return normalize(current) !== normalize(initial);
+        })
+      : (Object.keys(formData) as Array<keyof typeof formData>);
+
+    if (changedFields.length === 0) {
+      Alert.alert('No changes detected', 'Please update at least one field before saving.');
+      return;
+    }
+
     const priceNum = parseFloat(formData.price);
     const yearNum = parseInt(formData.yearOfPurchase, 10);
 
     try {
       setSaving(true);
 
-      const payload = {
+      const payload: UpdateMobileDTO = {
         title: formData.title.trim(),
         description: formData.description.trim(),
         price: priceNum,
@@ -218,16 +249,25 @@ const UpdateMobileScreen: React.FC = () => {
         yearOfPurchase: yearNum,
       };
 
+      const resolvedSellerId =
+        (typeof ownerSellerId === 'number' && Number.isFinite(ownerSellerId) && ownerSellerId) ||
+        (typeof authSellerId === 'number' && Number.isFinite(authSellerId) && authSellerId) ||
+        undefined;
+
+      if (resolvedSellerId !== undefined) {
+        Object.assign(payload, { sellerId: resolvedSellerId });
+      }
+
       await updateMobile(mobileId, payload);
       Alert.alert('Success', 'Mobile updated successfully', [
         { text: 'OK', onPress: () => navigation.goBack() },
       ]);
     } catch (err: any) {
-      Alert.alert('Error', err?.response?.data?.message || 'Failed to update mobile');
+      Alert.alert('Error', getFriendlyApiError(err, 'Failed to update mobile'));
     } finally {
       setSaving(false);
     }
-  }, [formData, mobileId, navigation, validateForm]);
+  }, [authSellerId, formData, initialFormData, mobileId, navigation, ownerSellerId, validateForm]);
 
   if (loading) {
     return <ListingUpdateLoader message="Loading mobile details..." />;

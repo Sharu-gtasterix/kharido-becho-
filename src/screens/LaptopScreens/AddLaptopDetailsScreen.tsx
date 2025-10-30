@@ -24,6 +24,7 @@ import { toLaptopCreateDTO } from '../../mappers/listingMappers';
 import { addLaptop } from '../../api/LaptopsApi';
 import { useAuth } from '../../context/AuthContext';
 import { SellLaptopStackParamList } from '../../navigation/SellLaptopStack';
+import getFriendlyApiError from '../../utils/getFriendlyApiError';
 
 type AddLaptopNav = NativeStackNavigationProp<SellLaptopStackParamList, 'AddLaptopDetails'>;
 
@@ -144,7 +145,7 @@ const AddLaptopDetailsScreen: React.FC = () => {
       Alert.alert('Success', normalized.message || normalized.fallbackMessage);
       navigation.navigate('SelectLaptopPhotoScreen', { laptopId: normalized.id });
     } catch (error: any) {
-      Alert.alert('Error', error?.response?.data?.message || 'Failed to add laptop');
+      Alert.alert('Error', getFriendlyApiError(error, 'Failed to add laptop'));
     } finally {
       setLoading(false);
     }

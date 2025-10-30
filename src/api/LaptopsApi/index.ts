@@ -8,10 +8,10 @@ export { deleteLaptop } from './deleteLaptop';
 
 export { getAllLaptops } from './getAll';
 export type { LaptopItem, LaptopStatus } from './getAll';
-export type { LaptopPhoto as LaptopListPhoto } from './getAll';
+export type { LaptopPhoto } from './photoNormalizer';
 
 export { getLaptopById } from './getById';
-export type { LaptopDetail, LaptopPhoto } from './getById';
+export type { LaptopDetail } from './getById';
 
 export { updateLaptop } from './update';
 

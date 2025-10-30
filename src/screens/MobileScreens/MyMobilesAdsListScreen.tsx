@@ -140,7 +140,7 @@ const MyMobilesAdsListScreen: React.FC = () => {
   const renderAdCard = ({ item }: { item: ApiMobile }) => {
     const primaryImage = item.images?.[0]
       ? { uri: item.images[0] }
-      : require('../../assets/icons/hyundai.png');
+      : require('../../assets/icons/mobile.png');
 
     const titleText = item.title || 'Untitled Mobile';
     const subtitleText = [item.brand, item.yearOfPurchase?.toString()].filter(Boolean).join(' | ');

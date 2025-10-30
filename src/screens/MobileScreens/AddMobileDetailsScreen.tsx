@@ -32,6 +32,7 @@ import { toMobileCreateDTO } from '../../mappers/listingMappers';
 import { addMobile } from '../../api/MobilesApi';
 import { useAuth } from '../../context/AuthContext';
 import { SellMobileStackParamList } from '../../navigation/SellMobileStack';
+import getFriendlyApiError from '../../utils/getFriendlyApiError';
 
 type AddMobileDetailsScreenNavigationProp = NativeStackNavigationProp<
   SellMobileStackParamList,
@@ -198,7 +199,7 @@ const AddMobileDetailsScreen: React.FC = () => {
       Alert.alert('Success', normalized.message);
       navigation.navigate('SelectPhoto', { mobileId: normalized.id });
     } catch (error: any) {
-      Alert.alert('Error', error?.response?.data?.message || 'Failed to add mobile');
+      Alert.alert('Error', getFriendlyApiError(error, 'Failed to add mobile'));
     } finally {
       setLoading(false);
     }

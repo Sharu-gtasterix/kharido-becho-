@@ -1,5 +1,6 @@
 // src/api/LaptopsApi/getAllLaptops.ts
 import client from '../client';
+import { extractLaptopPhotos, LaptopPhoto } from './photoNormalizer';
 
 export type LaptopStatus =
   | 'ACTIVE'
@@ -10,12 +11,6 @@ export type LaptopStatus =
   | 'PENDING'
   | 'SOLD'
   | string;
-
-export type LaptopPhoto = {
-  photoId: number;
-  photo_link: string;
-  publicId?: string;
-};
 
 export type LaptopItem = {
   id: number;                // backend uses "id"
@@ -48,5 +43,15 @@ export type LaptopItem = {
 // Plain array response (based on your Postman example)
 export async function getAllLaptops(): Promise<LaptopItem[]> {
   const res = await client.get<LaptopItem[]>('/api/laptops/getAll');
-  return res.data ?? [];
+  const payload = Array.isArray(res.data) ? res.data : [];
+
+  return payload.map((item) => {
+    const normalizedPhotos = extractLaptopPhotos(item);
+
+    return {
+      ...item,
+      laptopPhotos:
+        normalizedPhotos.length > 0 ? normalizedPhotos : item.laptopPhotos ?? [],
+    };
+  });
 }

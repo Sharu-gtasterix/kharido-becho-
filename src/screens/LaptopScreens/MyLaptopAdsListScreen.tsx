@@ -30,29 +30,60 @@ const MyLaptopAdsListScreen: React.FC = () => {
     getStatus: (item) => item.status,
   });
 
-  const fetchData = async () => {
-    if (loading) return;
+  const sortByNewest = useCallback((items: LaptopItem[]) => {
+    return [...items].sort((a, b) => {
+      const getTimestamp = (entry: LaptopItem) => {
+        const source =
+          (entry as any)?.createdAt ??
+          (entry as any)?.created_at ??
+          (entry as any)?.createdDate ??
+          (entry as any)?.created_on ??
+          null;
+        const parsed = source ? Date.parse(source) : NaN;
+        if (!Number.isNaN(parsed)) {
+          return parsed;
+        }
+        return 0;
+      };
+
+      const timeA = getTimestamp(a);
+      const timeB = getTimestamp(b);
+
+      if (timeA !== timeB) {
+        return timeB - timeA;
+      }
+
+      const idA = typeof a.id === 'number' ? a.id : Number.NaN;
+      const idB = typeof b.id === 'number' ? b.id : Number.NaN;
+
+      if (!Number.isNaN(idA) && !Number.isNaN(idB) && idA !== idB) {
+        return idB - idA;
+      }
+
+      return 0;
+    });
+  }, []);
+
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const data = await getAllLaptops();
-      setLaptops(data);
+      setLaptops(sortByNewest(data));
     } catch (e) {
       console.warn('getAllLaptops error:', e);
     } finally {
       setLoading(false);
     }
-  };
+  }, [sortByNewest]);
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchData]);
 
   useFocusEffect(
     useCallback(() => {
       fetchData();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [fetchData])
   );
 
   const onRefresh = async () => {
@@ -108,9 +139,15 @@ const MyLaptopAdsListScreen: React.FC = () => {
   };
 
   const resolveImage = (item: LaptopItem): ImageSourcePropType => {
-    const url = item.laptopPhotos?.[0]?.photo_link ?? '';
+    const photo = item.laptopPhotos?.[0];
+    const url =
+      (typeof photo?.photo_link === 'string' && photo.photo_link.trim().length > 0
+        ? photo.photo_link
+        : typeof (photo as any)?.photoLink === 'string'
+        ? (photo as any).photoLink
+        : '') ?? '';
     if (url) return { uri: url };
-    return require('../../assets/icons/hyundai.png');
+    return require('../../assets/icons/laptop.png');
   };
 
   const renderCard = ({ item }: { item: LaptopItem }) => {

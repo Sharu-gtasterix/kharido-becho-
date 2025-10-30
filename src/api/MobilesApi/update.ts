@@ -12,6 +12,7 @@ export type UpdateMobileDTO = {
   yearOfPurchase?: number;
   images?: string[];      // keep if you allow updating images
   status?: 'ACTIVE' | 'DRAFT' | 'SOLD' | string;
+  sellerId?: number;
 };
 
 export async function updateMobile(mobileId: number, payload: UpdateMobileDTO) {

@@ -3282,6 +3282,7 @@ __metadata:
     react-native-element-dropdown: ^2.12.4
     react-native-gesture-handler: ^2.27.1
     react-native-image-picker: ^8.2.1
+    react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.8.3
     react-native-paper: ^5.14.5
     react-native-safe-area-context: ^5.6.1
@@ -8570,6 +8571,13 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 8fb6d8ab7b953c7d7cec8c987cef24f1c5348a293a85cb49c7c53b54ef110c0ca746736ae730e297603c8c76020df912e93915fb17518c4f2f91143757177aba
+  languageName: node
+  linkType: hard
+
+"react-native-keychain@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "react-native-keychain@npm:10.0.0"
+  checksum: 1055cc192df58cb110bd49df1264a401007a354ad28b93adefd740aeac0f746cdab86d7428887694a1b0949ef8d0dc85db8984e77db684d7b967180167b64d42
   languageName: node
   linkType: hard
 
