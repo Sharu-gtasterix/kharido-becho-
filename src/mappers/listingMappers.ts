@@ -1,6 +1,7 @@
 // src/mappers/listingMappers.ts
 import { MobileDetailsFormValues } from '../form/schemas/mobileDetailsSchema';
 import { LaptopDetailsFormValues } from '../form/schemas/laptopDetailsSchema';
+import { CarDetailsFormValues } from '../form/schemas/carDetailsSchema';
 import { Condition, ListingStatus } from '../types/listings';
 
 export interface MobileCreateDTO {
@@ -39,6 +40,108 @@ export interface LaptopCreateDTO {
   usbPorts?: number;
   status: ListingStatus;
   sellerId: number;
+}
+
+// ✅ Car DTO Interfaces - status removed from CarCreateDTO
+export interface CarCreateDTO {
+  title: string;
+  brand: string;
+  model: string;
+  variant?: string;
+  price: number;
+  description?: string;
+  color?: string;
+  yearOfPurchase: number;
+  fuelType?: string;
+  transmission?: string;
+  kmDriven: number;
+  numberOfOwners?: number;
+  condition?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
+  carInsurance?: boolean;
+  carInsuranceType?: string;
+  carInsuranceDate?: string;
+  airbag?: boolean;
+  abs?: boolean;
+  buttonStart?: boolean;
+  sunroof?: boolean;
+  childSafetyLocks?: boolean;
+  acFeature?: boolean;
+  musicFeature?: boolean;
+  powerWindowFeature?: boolean;
+  rearParkingCameraFeature?: boolean;
+  negotiable?: boolean;
+  sellerId: number;
+}
+
+export interface CarUpdateDTO {
+  title?: string;
+  brand?: string;
+  model?: string;
+  variant?: string;
+  price?: number;
+  description?: string;
+  color?: string;
+  yearOfPurchase?: number;
+  fuelType?: string;
+  transmission?: string;
+  kmDriven?: number;
+  numberOfOwners?: number;
+  condition?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
+  carInsurance?: boolean;
+  carInsuranceType?: string;
+  carInsuranceDate?: string;
+  airbag?: boolean;
+  abs?: boolean;
+  buttonStart?: boolean;
+  sunroof?: boolean;
+  childSafetyLocks?: boolean;
+  acFeature?: boolean;
+  musicFeature?: boolean;
+  powerWindowFeature?: boolean;
+  rearParkingCameraFeature?: boolean;
+  negotiable?: boolean;
+  sellerId?: number;
+}
+
+export interface CarDetailsFormValues {
+  title: string;
+  brand: string;
+  model: string;
+  variant: string;
+  price: string;
+  description: string;
+  color: string;
+  yearOfPurchase: string;
+  fuelType: string;
+  transmission: string;
+  kmDriven: string;
+  numberOfOwners: string;
+  condition: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  carInsurance: boolean;
+  carInsuranceType: string;
+  carInsuranceDate: string;
+  airbag: boolean;
+  abs: boolean;
+  buttonStart: boolean;
+  sunroof: boolean;
+  childSafetyLocks: boolean;
+  acFeature: boolean;
+  musicFeature: boolean;
+  powerWindowFeature: boolean;
+  rearParkingCameraFeature: boolean;
+  negotiable: boolean;
 }
 
 const trimOrUndefined = (value?: string | null) => {
@@ -102,5 +205,94 @@ export const toLaptopCreateDTO = (
     usbPorts: Number.isFinite(usbPortsValue ?? NaN) ? usbPortsValue : undefined,
     status: 'ACTIVE',
     sellerId,
+  };
+};
+
+// ✅ Car Mapper Functions - status removed
+export const toCarCreateDTO = (
+  values: CarDetailsFormValues,
+  sellerId: number,
+): CarCreateDTO => {
+  const price = Number(values.price);
+  const kmDriven = Number(values.kmDriven);
+  const year = Number(values.yearOfPurchase);
+  const numberOfOwners = values.numberOfOwners ? Number(values.numberOfOwners) : undefined;
+
+  return {
+    title: values.title.trim(),
+    brand: values.brand.trim(),
+    model: values.model.trim(),
+    price: Number.isFinite(price) ? price : 0,
+    kmDriven: Number.isFinite(kmDriven) ? kmDriven : 0,
+    yearOfPurchase: Number.isFinite(year) ? year : new Date().getFullYear(),
+    variant: trimOrUndefined(values.variant),
+    description: trimOrUndefined(values.description),
+    color: trimOrUndefined(values.color),
+    fuelType: trimOrUndefined(values.fuelType),
+    transmission: trimOrUndefined(values.transmission),
+    condition: trimOrUndefined(values.condition),
+    address: trimOrUndefined(values.address),
+    city: trimOrUndefined(values.city),
+    state: trimOrUndefined(values.state),
+    pincode: trimOrUndefined(values.pincode),
+    carInsuranceType: trimOrUndefined(values.carInsuranceType),
+    carInsuranceDate: trimOrUndefined(values.carInsuranceDate),
+    numberOfOwners: Number.isFinite(numberOfOwners ?? NaN) ? numberOfOwners : undefined,
+    airbag: values.airbag === true,
+    abs: values.abs === true,
+    buttonStart: values.buttonStart === true,
+    sunroof: values.sunroof === true,
+    childSafetyLocks: values.childSafetyLocks === true,
+    acFeature: values.acFeature === true,
+    musicFeature: values.musicFeature === true,
+    powerWindowFeature: values.powerWindowFeature === true,
+    rearParkingCameraFeature: values.rearParkingCameraFeature === true,
+    carInsurance: values.carInsurance === true,
+    negotiable: values.negotiable === true,
+    sellerId,
+  };
+};
+
+export const toCarUpdateDTO = (
+  values: CarDetailsFormValues,
+  sellerId?: number,
+): CarUpdateDTO => {
+  const price = Number(values.price);
+  const kmDriven = Number(values.kmDriven);
+  const year = Number(values.yearOfPurchase);
+  const numberOfOwners = values.numberOfOwners ? Number(values.numberOfOwners) : undefined;
+
+  return {
+    title: values.title.trim(),
+    brand: values.brand.trim(),
+    model: values.model.trim(),
+    price: Number.isFinite(price) ? price : undefined,
+    kmDriven: Number.isFinite(kmDriven) ? kmDriven : undefined,
+    yearOfPurchase: Number.isFinite(year) ? year : undefined,
+    variant: trimOrUndefined(values.variant),
+    description: trimOrUndefined(values.description),
+    color: trimOrUndefined(values.color),
+    fuelType: trimOrUndefined(values.fuelType),
+    transmission: trimOrUndefined(values.transmission),
+    condition: trimOrUndefined(values.condition),
+    address: trimOrUndefined(values.address),
+    city: trimOrUndefined(values.city),
+    state: trimOrUndefined(values.state),
+    pincode: trimOrUndefined(values.pincode),
+    carInsuranceType: trimOrUndefined(values.carInsuranceType),
+    carInsuranceDate: trimOrUndefined(values.carInsuranceDate),
+    numberOfOwners: Number.isFinite(numberOfOwners ?? NaN) ? numberOfOwners : undefined,
+    airbag: values.airbag,
+    abs: values.abs,
+    buttonStart: values.buttonStart,
+    sunroof: values.sunroof,
+    childSafetyLocks: values.childSafetyLocks,
+    acFeature: values.acFeature,
+    musicFeature: values.musicFeature,
+    powerWindowFeature: values.powerWindowFeature,
+    rearParkingCameraFeature: values.rearParkingCameraFeature,
+    carInsurance: values.carInsurance,
+    negotiable: values.negotiable,
+    sellerId: sellerId,
   };
 };

@@ -26,6 +26,11 @@ const ProfileScreen: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempName, setTempName] = useState(name);
 
+  // 🆕 Added new fields
+  const [firstName, setFirstName] = useState('Pramod');
+  const [lastName, setLastName] = useState('Patil');
+  const [email, setEmail] = useState('pramod.patil@example.com');
+
   // 📸 Profile photo options
   const handlePhotoOptions = () => {
     Alert.alert('Change Profile Photo', 'Choose an option', [
@@ -78,7 +83,7 @@ const ProfileScreen: React.FC = () => {
         style: 'destructive',
         onPress: async () => {
           try {
-            await signOut(); // AuthContext handles API + storage
+            await signOut();
             Alert.alert('Success', 'Logout successful');
           } catch (e) {
             Alert.alert('Error', 'Logout failed. Please try again.');
@@ -140,6 +145,34 @@ const ProfileScreen: React.FC = () => {
             </View>
             <Text style={styles.username}>@{name.toLowerCase().replace(/\s+/g, '')}</Text>
           </View>
+        </View>
+
+        {/* 🆕 Added First Name, Last Name, and Email fields */}
+        <View style={styles.detailsContainer}>
+          <Text style={styles.label}>First Name</Text>
+          <TextInput
+            value={firstName}
+            onChangeText={setFirstName}
+            style={styles.input}
+            placeholder="Enter first name"
+          />
+
+          <Text style={styles.label}>Last Name</Text>
+          <TextInput
+            value={lastName}
+            onChangeText={setLastName}
+            style={styles.input}
+            placeholder="Enter last name"
+          />
+
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            style={styles.input}
+            placeholder="Enter email"
+            keyboardType="email-address"
+          />
         </View>
 
         {/* 🚪 Logout Button */}
@@ -208,6 +241,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   username: { fontSize: 16, color: '#666' },
+
+  // 🆕 New styles for additional fields
+  detailsContainer: { marginTop: 30 },
+  label: { fontSize: 14, color: '#555', marginBottom: 5, marginTop: 10 },
+  input: {
+    backgroundColor: '#fff',
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    fontSize: 16,
+  },
+
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -215,7 +262,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 16,
     borderRadius: 6,
-    marginTop: 30,
+    marginTop: 40,
     justifyContent: 'center',
   },
   logoutText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },

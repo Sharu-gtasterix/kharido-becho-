@@ -15,7 +15,7 @@ import { refreshAuthTokens } from './auth';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 30000, // Increased to 30 seconds (from 15s)
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -43,7 +43,8 @@ const canAttachAuth = (config: InternalAxiosRequestConfig) => {
   if (isRefreshEndpoint(config.url)) {
     return false;
   }
-  if (config.headers && 'x-skip-authorization' in config.headers) {
+  // ✅ FIXED: Properly check for skip authorization header
+  if (config.headers && config.headers['x-skip-authorization']) {
     return false;
   }
   return true;
@@ -155,6 +156,11 @@ api.interceptors.request.use(
       if (config.headers?.['Content-Type'] === 'multipart/form-data') {
         console.log('[REQ] Uploading file(s)...');
       }
+
+      // ✅ ADDED: Log when skipping auth
+      if (config.headers?.['x-skip-authorization']) {
+        console.log('[REQ] Skipping authorization for this request');
+      }
     }
 
     return config;
@@ -199,7 +205,12 @@ api.interceptors.response.use(
     const url = config?.url;
     const message = err?.response?.data?.message || err?.message;
 
-    if (shouldRetryRequest(config, status)) {
+    // ✅ ADDED: Don't retry if auth was skipped
+    if (config?.headers?.['x-skip-authorization']) {
+      if (__DEV__) {
+        console.log('[AUTH] Skipping retry for request with skipped authorization');
+      }
+    } else if (shouldRetryRequest(config, status)) {
       config._retry = true;
       try {
         const baseSession = await loadSession();
